@@ -35,15 +35,29 @@ class ProtectSugarGameWindow(arcade.Window):
         self.world.ant_listenner.add(self.ant_listenner_notify)
         self.bg = arcade.Sprite("images/bg.png")
         self.bg.set_position(width/2,height/2)
-        self.sugar_sprite = ModelSprite("images/sugar.png",model=self.world.sugar)
+        self.gameover = arcade.Sprite("images/gameover.png")
+        self.gameover.set_position(width/2,height/2)
+        self.sugar_sprite1 = ModelSprite("images/sugar.png",model=self.world.sugar)
+        self.sugar_sprite2 = ModelSprite("images/sugar less1.png",model=self.world.sugar)
+        self.sugar_sprite3 = ModelSprite("images/sugar less2.png",model=self.world.sugar)
+        self.sugar_sprite4 = ModelSprite("images/sugar less3.png",model=self.world.sugar)
+        self.sugar_sprite5 = ModelSprite("images/sugar less4.png",model=self.world.sugar)
+        self.sugar_sprite6 = ModelSprite("images/sugar less5.png",model=self.world.sugar)
+        self.sugar_sprite7 = ModelSprite("images/blank.png",model=self.world.sugar)
+        self.sugar_sprite = self.sugar_sprite1
 
     def on_draw(self):
         arcade.start_render()
         self.bg.draw()
-        self.sugar_sprite.draw()
+        if self.world.sugar.health > 0 :
+            self.sugar_sprite.draw()
+        if self.world.sugar.health == 0 :
+            self.gameover.draw()
         for ant_sprite in self.ant_sprites :
             ant_sprite.draw()
         self.hand.draw()
+
+
 
     def on_mouse_press(self,x, y, button, modifiers) :
         self.hand = self.hand2
@@ -91,17 +105,18 @@ class ProtectSugarGameWindow(arcade.Window):
 
     def update_sugar(self) :
         if self.world.sugar.health < 10 :
-            self.sugar_sprite = ModelSprite('images/sugar less5.png', model=self.world.sugar)
+            self.sugar_sprite = self.sugar_sprite6
         elif self.world.sugar.health < 20 :
-            self.sugar_sprite = ModelSprite('images/sugar less4.png', model=self.world.sugar)
+            self.sugar_sprite = self.sugar_sprite5
         elif self.world.sugar.health < 25 :
-            self.sugar_sprite = ModelSprite('images/sugar less3.png', model=self.world.sugar)
+            self.sugar_sprite = self.sugar_sprite4
         elif self.world.sugar.health < 30 :
-            self.sugar_sprite = ModelSprite('images/sugar less2.png', model=self.world.sugar)
+            self.sugar_sprite = self.sugar_sprite3
         elif self.world.sugar.health < 35 :
-            self.sugar_sprite = ModelSprite('images/sugar less1.png', model=self.world.sugar)
-        # else :
-        #     self.sugar_sprite.remove()
+            self.sugar_sprite = self.sugar_sprite2
+        elif self.world.sugar.health < 30:
+            self.sugar_sprite = self.sugar_sprite1
+
 
     def on_key_press(self, key, key_modifiers):
         pass
